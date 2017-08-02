@@ -69,7 +69,7 @@ public class Server extends Thread {
 		@Override
 		public void run() {
 			while(!Thread.interrupted() && !shutdown){
-				// TODO Communication
+				String instr = read();
 			}
 		}
 		
