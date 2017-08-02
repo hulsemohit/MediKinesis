@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Arrays;
 
 import javax.imageio.ImageIO;
 
@@ -19,7 +20,8 @@ public class Main {
 			Client client = new Client(InetAddress.getLocalHost().getHostName());
 			System.out.println(client.checkUser("nikhil"));
 			//client.report(new Report(new byte[][]{getFromFile(new File("./testcandidate.jpg")), null}, true, null, 23), "nikhil");
-			Report rep = client.view("nikhil", "23.4f");
+			System.out.println(client.gnote("nikhil"));
+			System.out.println(Arrays.toString(client.listReports("23.4f")));
 			client.cleanup();
 		} catch (UnknownHostException e) {
 			e.printStackTrace();

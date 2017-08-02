@@ -98,4 +98,21 @@ public class Client {
 		}
 	}
 	
+	public boolean note(String user, String pin, String note){
+		write("note " + pin + " " + user);
+		write(note);
+		return Boolean.parseBoolean(read());
+	}
+	
+	public String gnote(String user){
+		write("gnote " + user);
+		return read();
+	}
+	
+	public String[] listReports(String pin){
+		write("avrpr " + pin);
+		String in = read();
+		return GsonForm.from(in, String[].class);
+	}
+	
 }

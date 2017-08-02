@@ -46,6 +46,9 @@ public class Report {
 	@SerializedName("symptoms")
 	public String[] truesymptoms;
 	
+	@SerializedName("synop")
+	public String synopsis;
+	
 	public int age;
 	// TRUE = MALE, FALSE = FEMALE
 	

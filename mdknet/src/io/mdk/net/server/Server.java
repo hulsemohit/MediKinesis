@@ -115,6 +115,50 @@ public class Server extends Thread {
 							e.printStackTrace();
 						}
 					}
+				} else if(instr.startsWith("note ")){
+					String[] toki = instr.split(" ");
+					float pin = Float.parseFloat(toki[1]);
+					if(pin != Server.pin){write(Boolean.toString(false));}
+					else {
+						String note = read();
+						String patient = toki[2];
+						File f = new File(System.getProperty("user.dir") + File.separator + "notes" + File.separator + patient + ".html");
+						if(!f.getParentFile().exists()) f.getParentFile().mkdirs();
+						if(!f.exists())
+							try {
+								f.createNewFile();
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						try {
+							Files.write(Paths.get(f.getAbsolutePath()), note.getBytes(StandardCharsets.UTF_8));
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						write(Boolean.toString(true));
+					}
+				} else if(instr.startsWith("gnote ")){
+					String[] toki = instr.split(" ");
+					File f = new File(toki[1]);
+					if(!f.exists()) write("<p>Your Report has not yet Arrived <br/> We are sorry for the inconvenience</p>");
+					else
+						try {
+							write(new String(Files.readAllBytes(Paths.get(f.getAbsolutePath())), StandardCharsets.UTF_8));
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+				} else if(instr.startsWith("avrpr ")){
+					String[] toki = instr.split(" ");
+					float inpin = Float.parseFloat(toki[1]);
+					if(inpin != Server.pin){
+						write(GsonForm.to(new String[]{}));
+					} else {
+						String[] patient_list = new File(System.getProperty("user.dir"), "report").list();
+						write(GsonForm.to(patient_list));
+					}
 				}
 			}
 		}

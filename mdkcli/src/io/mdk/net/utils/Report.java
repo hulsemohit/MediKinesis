@@ -16,15 +16,19 @@ public class Report {
 	@SerializedName("symptoms")
 	public final String[] truesymptoms;
 	
+	@SerializedName("synop")
+	public final String synopsis;
+	
 	public int age;
 	// TRUE = MALE, FALSE = FEMALE
 
-	public Report(byte[][] imgs, boolean gender, String[] truesymptoms, int age) {
+	public Report(byte[][] imgs, boolean gender, String[] truesymptoms, int age, String synopsis) {
 		super();
 		this.imgs = imgs;
 		this.gender = gender;
 		this.truesymptoms = truesymptoms;
 		this.age = age;
+		this.synopsis = synopsis;
 	}
 
 	public byte[] getDetected() {
