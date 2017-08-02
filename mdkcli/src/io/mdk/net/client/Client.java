@@ -19,9 +19,9 @@ public class Client {
 	Socket conn;
 	public boolean shutdown = false;
 	
-	public Client(String host, int port){
+	public Client(String host){
 		try {
-			this.conn = new Socket(host, port);
+			this.conn = new Socket(host, 6444);
 			outputStream = new DataOutputStream(conn.getOutputStream());
 			inputStream = new DataInputStream(conn.getInputStream());
 		} catch (IOException e) {
@@ -73,4 +73,10 @@ public class Client {
 		byte[] ret = Crypto.decrypt(enc);
 		return new String(ret);
 	}
+	
+	public boolean checkUser(String username){
+		write("chkusr " + username);
+		return Boolean.parseBoolean(read());
+	}
+	
 }

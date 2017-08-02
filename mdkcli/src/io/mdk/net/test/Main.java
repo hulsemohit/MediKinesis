@@ -9,7 +9,8 @@ public class Main {
 
 	public static void main(String[] args) {
 		try {
-			Client client = new Client(InetAddress.getLocalHost().getHostName(), 6444);
+			Client client = new Client(InetAddress.getLocalHost().getHostName());
+			System.out.println(client.checkUser("nikhil"));
 			client.cleanup();
 		} catch (UnknownHostException e) {
 			e.printStackTrace();

@@ -2,6 +2,7 @@ package io.mdk.net.server;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
@@ -12,7 +13,9 @@ import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import io.mdk.net.json_objects.Report;
 import io.mdk.net.utils.Commons.Crypto;
+import io.mdk.net.utils.Commons.GsonForm;
 import io.mdk.net.utils.Commons.NLZF;
 
 public class Server extends Thread {
@@ -70,6 +73,20 @@ public class Server extends Thread {
 		public void run() {
 			while(!Thread.interrupted() && !shutdown){
 				String instr = read();
+				if(instr.startsWith("chkusr ")){
+					String[] toki = instr.split(" ");
+					File fd = new File(System.getProperty("user.dir"), "report/" + toki[1] + ".rp");
+					boolean b = fd.exists();
+					write(Boolean.toString(b));
+				} else if(instr.startsWith("repr ")){
+					String[] toki = instr.split(" ");
+					File fd = new File(System.getProperty("user.dir"), "report/" + toki[1] + ".rp");
+					if(!fd.getParentFile().exists()) fd.getParentFile().mkdirs();
+					if(!fd.exists())
+						try {fd.createNewFile();} catch (IOException e) {e.printStackTrace();}
+					String json = read();
+					GsonForm.from(json, Report.class);
+				}
 			}
 		}
 		
