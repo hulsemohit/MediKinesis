@@ -8,7 +8,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import io.mdk.net.utils.Report;
 import io.mdk.net.utils.Commons.Crypto;
+import io.mdk.net.utils.Commons.GsonForm;
 import io.mdk.net.utils.Commons.NLZF;
 
 public class Client {
@@ -77,6 +79,23 @@ public class Client {
 	public boolean checkUser(String username){
 		write("chkusr " + username);
 		return Boolean.parseBoolean(read());
+	}
+	
+	public boolean report(Report _r, String username){
+		write("repr " + username);
+		write(GsonForm.to(_r));
+		return Boolean.parseBoolean(read());
+	}
+	
+	public Report view(String user, String pin){
+		write("view " + pin + " " + user);
+		String ins = read();
+		if(ins.equals("false")){
+			return null;
+		} else {
+			Report _rp = GsonForm.from(ins, Report.class);
+			return _rp;
+		}
 	}
 	
 }

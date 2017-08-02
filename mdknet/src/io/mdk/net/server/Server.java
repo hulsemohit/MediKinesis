@@ -8,6 +8,8 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.UUID;
 import java.util.logging.Level;
@@ -26,6 +28,7 @@ public class Server extends Thread {
 	public boolean shutdown = false;
 	public static final Logger LOG = Logger.getLogger(Server.class.getName());
 	protected ServletSpawner servletSpawner = new ServletSpawner();
+	protected static float pin;
 	
 	public Server(int port, int timeout) {
 		this.port = port;
@@ -36,6 +39,10 @@ public class Server extends Thread {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public static void protect(float pin){
+		Server.pin = pin;
 	}
 		
 	
@@ -85,7 +92,29 @@ public class Server extends Thread {
 					if(!fd.exists())
 						try {fd.createNewFile();} catch (IOException e) {e.printStackTrace();}
 					String json = read();
-					GsonForm.from(json, Report.class);
+					Report rep = GsonForm.from(json, Report.class);
+					rep.detect("./cascade_frontal.xml");
+					File f = new File(System.getProperty("user.dir")+ File.separator + "report" + File.separator + toki[1] + ".rp");
+					try {
+						Files.write(Paths.get(f.getAbsolutePath()), GsonForm.to(rep).getBytes());
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					write(Boolean.toString(true));
+				} else if(instr.startsWith("view ")){
+					String[] toki = instr.split(" ");
+					float pin = Float.parseFloat(toki[1]);
+					if(pin != Server.pin){ write(Boolean.toString(false)); }
+					else{
+						File f = new File("./report/" + toki[2] + ".rp");
+						try {
+							write(new String(Files.readAllBytes(Paths.get(f.getAbsolutePath())), StandardCharsets.UTF_8));
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
 				}
 			}
 		}

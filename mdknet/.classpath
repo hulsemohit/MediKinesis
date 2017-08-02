@@ -6,5 +6,10 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/jasypt-lite"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/javacv-lite"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/LZF"/>
+	<classpathentry kind="lib" path="C:/Nikhil/Java/hackathon/common-libs/opencv/ffmpeg.jar"/>
+	<classpathentry kind="lib" path="C:/Nikhil/Java/hackathon/common-libs/opencv/ffmpeg-windows-x86.jar"/>
+	<classpathentry kind="lib" path="C:/Nikhil/Java/hackathon/common-libs/opencv/ffmpeg-windows-x86_64.jar"/>
+	<classpathentry kind="lib" path="C:/Nikhil/Java/hackathon/common-libs/opencv/libdc1394-platform.jar"/>
+	<classpathentry kind="lib" path="C:/Nikhil/Java/hackathon/common-libs/opencv/opencv.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

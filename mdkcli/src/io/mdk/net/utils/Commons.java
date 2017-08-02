@@ -14,7 +14,7 @@ import com.ning.compress.lzf.LZFException;
 
 public class Commons {
 
-	public static class GosnForm {
+	public static class GsonForm {
 		
 		static final Gson gson = new GsonBuilder().serializeNulls().enableComplexMapKeySerialization().create();
 		
