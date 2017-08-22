@@ -80,6 +80,7 @@ public class Server extends Thread {
 		public void run() {
 			while(!Thread.interrupted() && !shutdown){
 				String instr = read();
+				System.out.println(instr);
 				if(instr.startsWith("chkusr ")){
 					String[] toki = instr.split(" ");
 					File fd = new File(System.getProperty("user.dir"), "report/" + toki[1] + ".rp");
@@ -141,7 +142,7 @@ public class Server extends Thread {
 					}
 				} else if(instr.startsWith("gnote ")){
 					String[] toki = instr.split(" ");
-					File f = new File(toki[1]);
+					File f = new File(System.getProperty("user.dir") + File.separator + "notes" ,toki[1] + ".html");
 					if(!f.exists()) write("<p>Your Report has not yet Arrived <br/> We are sorry for the inconvenience</p>");
 					else
 						try {
