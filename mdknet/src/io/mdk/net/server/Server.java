@@ -191,6 +191,7 @@ public class Server extends Thread {
 				inputStream.readFully(data);
 			} catch (IOException e) {
 				LOG.log(Level.SEVERE, e.getLocalizedMessage(), e);
+				shutdown = true;
 			}
 			return data;
 		}
