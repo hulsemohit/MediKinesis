@@ -14,18 +14,24 @@ import io.mdk.net.utils.Commons.GsonForm;
 import io.mdk.net.utils.Commons.NLZF;
 
 public class Client {
+	
+	public interface ExHandler {
+		void handle(Exception ex);
+	}
 
 	private static final Logger LOG = Logger.getLogger(Client.class.getName());
 	DataInputStream inputStream;
 	DataOutputStream outputStream;
 	Socket conn;
 	public boolean shutdown = false;
+	public ExHandler exHandler;
 	
-	public Client(String host){
+	public Client(String host, ExHandler run){
 		try {
 			this.conn = new Socket(host, 6444);
 			outputStream = new DataOutputStream(conn.getOutputStream());
 			inputStream = new DataInputStream(conn.getInputStream());
+			this.exHandler = run;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -46,6 +52,7 @@ public class Client {
 			outputStream.writeInt(bytes.length);
 			outputStream.write(bytes);
 		} catch (IOException e) {
+			exHandler.handle(e);
 			LOG.log(Level.SEVERE, e.getMessage(), e);
 		}
 	}

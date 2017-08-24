@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 import org.jasypt.encryption.pbe.StandardPBEByteEncryptor;
 import org.jasypt.salt.RandomSaltGenerator;
 
+import com.esotericsoftware.minlog.Log;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.ning.compress.lzf.LZFDecoder;
@@ -59,6 +60,8 @@ public class Commons {
 				dat = LZFDecoder.decode(in);
 			} catch (LZFException e) {
 				Logger.getLogger("LZF").log(Level.SEVERE, null, e);
+			} catch (NullPointerException e){
+				Log.debug("lzf_compressor", "Fatal: " + e.getMessage(), e);
 			}
 			return dat;
 		}
