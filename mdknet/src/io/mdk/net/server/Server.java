@@ -33,7 +33,7 @@ public class Server extends Thread {
 	private static final String TAG = "mdknet";
 	
 	static {
-		Log.DEBUG();;
+		Log.DEBUG();
 		Logger.setPreffered(new NeoLog());
 	}
 	
@@ -117,7 +117,7 @@ public class Server extends Thread {
 					float pin = Float.parseFloat(toki[1]);
 					if(pin != Server.pin){ write(Boolean.toString(false)); }
 					else{
-						File f = new File("./report/" + toki[2] + ".rp");
+						File f = new File("./report/" + toki[2]);
 						try {
 							write(new String(Files.readAllBytes(Paths.get(f.getAbsolutePath())), StandardCharsets.UTF_8));
 						} catch (IOException e) {
@@ -163,7 +163,9 @@ public class Server extends Thread {
 						write(GsonForm.to(new String[]{}));
 					} else {
 						String[] patient_list = new File(System.getProperty("user.dir"), "report").list();
-						write(GsonForm.to(patient_list));
+						String gson = GsonForm.to(patient_list);
+						System.out.println(gson);
+						write(gson);
 					}
 				}
 			}
