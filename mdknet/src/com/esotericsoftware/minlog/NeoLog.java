@@ -1,16 +1,33 @@
 package com.esotericsoftware.minlog;
 
-import java.io.PrintWriter;
 import java.util.ArrayList;
+
+import io.mdk.net.server.gui.Printers;
 
 public class NeoLog extends Log.Logger {
 	
-	public ArrayList<PrintWriter> handlers = new ArrayList<>();
+	public static ArrayList<Printers> handlers = new ArrayList<>();
 	
 	@Override
 	protected void print(String message) {
-		handlers.stream().forEach((out) -> out.println(message));
-		super.print(message);
+		// Debugger Optimization!
+		if(handlers.size() > 0){
+			handlers.stream().forEach((out) -> out.print(message));
+			super.print(message);
+		} else {
+			super.print(message);
+		}
+	}
+	
+	public void clearHandlers(){
+		handlers.clear();
+	}
+	
+	@Override
+	protected void finalize() throws Throwable {
+		// TODO Auto-generated method stub
+		handlers.clear();
+		super.finalize();
 	}
 	
 }

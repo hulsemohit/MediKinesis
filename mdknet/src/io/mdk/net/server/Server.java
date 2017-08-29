@@ -29,11 +29,11 @@ public class Server extends Thread {
 	ServerSocket server;
 	public boolean shutdown = false;
 	protected ServletSpawner servletSpawner = new ServletSpawner();
-	protected static float pin;
+	protected static int pin;
 	private static final String TAG = "mdknet";
 	
 	static {
-		Log.DEBUG();
+		Log.INFO();
 		Logger.setPreffered(new NeoLog());
 	}
 	
@@ -48,7 +48,7 @@ public class Server extends Thread {
 		}
 	}
 	
-	public static void protect(float pin){
+	public static void protect(int pin){
 		Server.pin = pin;
 	}
 		
@@ -89,7 +89,8 @@ public class Server extends Thread {
 		public void run() {
 			while(!Thread.interrupted() && !shutdown){
 				String instr = read();
-				System.out.println(instr);
+				// TODO Remove Debug Statements
+				//System.out.println(instr);
 				if(instr.startsWith("chkusr ")){
 					String[] toki = instr.split(" ");
 					File fd = new File(System.getProperty("user.dir"), "report/" + toki[1] + ".rp");
@@ -104,6 +105,7 @@ public class Server extends Thread {
 					String json = read();
 					Report rep = GsonForm.from(json, Report.class);
 					rep.detect("./cascade_frontal.xml");
+					Log.debug("Scanning Face....");
 					File f = new File(System.getProperty("user.dir")+ File.separator + "report" + File.separator + toki[1] + ".rp");
 					try {
 						Files.write(Paths.get(f.getAbsolutePath()), GsonForm.to(rep).getBytes());
@@ -114,12 +116,14 @@ public class Server extends Thread {
 					write(Boolean.toString(true));
 				} else if(instr.startsWith("view ")){
 					String[] toki = instr.split(" ");
-					float pin = Float.parseFloat(toki[1]);
+					int pin = Integer.parseInt(toki[1]);
 					if(pin != Server.pin){ write(Boolean.toString(false)); }
 					else{
 						File f = new File("./report/" + toki[2]);
 						try {
-							write(new String(Files.readAllBytes(Paths.get(f.getAbsolutePath())), StandardCharsets.UTF_8));
+							String str = new String(Files.readAllBytes(Paths.get(f.getAbsolutePath())), StandardCharsets.UTF_8);
+							//Log.debug(str);
+							write(str);
 						} catch (IOException e) {
 							Log.trace(TAG, "Fatal: " + e.getMessage(), e);
 						}
@@ -158,7 +162,7 @@ public class Server extends Thread {
 						}
 				} else if(instr.startsWith("avrpr ")){
 					String[] toki = instr.split(" ");
-					float inpin = Float.parseFloat(toki[1]);
+					int inpin = Integer.parseInt(toki[1]);
 					if(inpin != Server.pin){
 						write(GsonForm.to(new String[]{}));
 					} else {
