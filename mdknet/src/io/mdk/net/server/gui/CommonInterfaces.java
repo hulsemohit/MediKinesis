@@ -50,7 +50,8 @@ public class CommonInterfaces {
 
 		@Override
 		public void print(String message) {
-			textArea.append(message);
+			System.out.println("called!");
+			textArea.append(message + System.lineSeparator());
 		}
 		
 	}

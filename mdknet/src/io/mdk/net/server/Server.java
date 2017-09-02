@@ -14,8 +14,6 @@ import java.util.HashMap;
 import java.util.UUID;
 
 import com.esotericsoftware.minlog.Log;
-import com.esotericsoftware.minlog.NeoLog;
-import com.esotericsoftware.minlog.Log.Logger;
 
 import io.mdk.net.json_objects.Report;
 import io.mdk.net.utils.Commons.Crypto;
@@ -32,10 +30,6 @@ public class Server extends Thread {
 	protected static int pin;
 	private static final String TAG = "mdknet";
 	
-	static {
-		Log.INFO();
-		Logger.setPreffered(new NeoLog());
-	}
 	
 	public Server(int port, int timeout) {
 		this.port = port;
@@ -153,7 +147,7 @@ public class Server extends Thread {
 				} else if(instr.startsWith("gnote ")){
 					String[] toki = instr.split(" ");
 					File f = new File(System.getProperty("user.dir") + File.separator + "notes" ,toki[1] + ".html");
-					if(!f.exists()) write("<p>Your Report has not yet Arrived <br/> We are sorry for the inconvenience</p>");
+					if(!f.exists()) write("<h1>Sorry!</h1><p>Your Report has not yet Arrived <br/> We are sorry for the inconvenience</p>");
 					else
 						try {
 							write(new String(Files.readAllBytes(Paths.get(f.getAbsolutePath())), StandardCharsets.UTF_8));
@@ -171,6 +165,12 @@ public class Server extends Thread {
 						System.out.println(gson);
 						write(gson);
 					}
+				} else if(instr.startsWith("chknts ")){
+					String[] toki = instr.split(" ");
+					File fileDir = new File(System.getProperty("user.dir"), "notes");
+					File file = new File(fileDir.getAbsolutePath(), toki[1]+".html");
+					boolean bool = file.exists();
+					write(Boolean.toString(bool));
 				}
 			}
 		}

@@ -54,6 +54,7 @@ public class ServerConsoleUI extends JFrame {
 		contentPane.add(lblServersUp, BorderLayout.NORTH);
 		
 		JTextArea textArea = new JTextArea();
+		textArea.setEditable(false);
 		textArea.setFont(new Font("Menlo", Font.PLAIN, 18));
 		contentPane.add(textArea, BorderLayout.CENTER);
 		NeoLog.handlers.add(CommonInterfaces.getPrinter(textArea));

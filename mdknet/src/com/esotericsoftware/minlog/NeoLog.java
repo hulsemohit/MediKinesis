@@ -23,11 +23,4 @@ public class NeoLog extends Log.Logger {
 		handlers.clear();
 	}
 	
-	@Override
-	protected void finalize() throws Throwable {
-		// TODO Auto-generated method stub
-		handlers.clear();
-		super.finalize();
-	}
-	
 }
