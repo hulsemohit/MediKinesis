@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Arrays;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -27,12 +28,14 @@ public class Main {
 					ex.printStackTrace();
 				}
 			});
-			System.out.println(client.checkUser("Nikhil"));
-			Report _r = client.view("Nikhil", "40");
-			System.out.println(_r.age);
+			System.out.println(client.checkUser("nikhil"));
+			Report _r = client.view("nikhil.rp", "40");
+			System.out.println(client.checkNotes("nikhil.rp"));
+			//System.out.println(_r.age);
 			showImage(_r.getDetected());
-			showImage(_r.getImgs()[1]);
-			//client.report(new Report(new byte[][]{getFromFile(new File("./testcandidate.jpg")), null}, true, null, 23), "nikhil");
+			//showImage(_r.getImgs()[1]);
+			//System.out.println(Arrays.toString(_r.truesymptoms));
+			//client.report(new Report(new byte[][]{getFromFile(new File("./testcandidate.jpg")), null}, true, null, 23, null), "nikhil");
 			//System.out.println(client.gnote("nikhil"));
 			client.cleanup();
 		} catch (UnknownHostException e) {

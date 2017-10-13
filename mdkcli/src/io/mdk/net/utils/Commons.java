@@ -1,5 +1,6 @@
 package io.mdk.net.utils;
 
+import java.lang.reflect.Type;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -24,6 +25,10 @@ public class Commons {
 		
 		public static <T> T from(String json, Class<T> typeof){
 			return gson.fromJson(json, typeof);
+		}
+
+		public static <T> T from(String json, Type type) {
+			return gson.fromJson(json, type);
 		}
 		
 	}

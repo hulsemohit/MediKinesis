@@ -105,6 +105,13 @@ public class Client {
 		}
 	}
 	
+	/**
+	 * Set a note on the server
+	 * @param user The User name of the user whose note you want to set
+	 * @param pin The Server's constant pin
+	 * @param note The actual note.
+	 * @return boolean, whether the note was successful or not
+	 */
 	public boolean note(String user, String pin, String note){
 		write("note " + pin + " " + user);
 		write(note);
@@ -120,6 +127,12 @@ public class Client {
 		write("avrpr " + pin);
 		String in = read();
 		return GsonForm.from(in, String[].class);
+	}
+	
+	public boolean checkNotes(String user){
+		write("chknts " + user);
+		String in = read();
+		return Boolean.parseBoolean(in);
 	}
 	
 }
