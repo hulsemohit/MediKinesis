@@ -27,13 +27,13 @@ public class Client {
 	public ExHandler exHandler;
 	
 	public Client(String host, ExHandler run){
+		this.exHandler = run;
 		try {
 			this.conn = new Socket(host, 6444);
 			outputStream = new DataOutputStream(conn.getOutputStream());
 			inputStream = new DataInputStream(conn.getInputStream());
-			this.exHandler = run;
 		} catch (IOException e) {
-			e.printStackTrace();
+			run.handle(e);
 		}
 	}
 	
@@ -43,6 +43,7 @@ public class Client {
 			outputStream.close();
 			conn.close();
 		} catch (IOException e) {
+			exHandler.handle(e);
 			e.printStackTrace();
 		}
 	}
@@ -64,6 +65,7 @@ public class Client {
 			data = new byte[len];
 			inputStream.readFully(data);
 		} catch (IOException e) {
+			exHandler.handle(e);
 			LOG.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
 		return data;

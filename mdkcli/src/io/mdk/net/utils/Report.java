@@ -19,6 +19,9 @@ public class Report {
 	@SerializedName("synop")
 	public final String synopsis;
 	
+	/**
+	 * Gender indicating Flag
+	 */
 	public int age;
 	// TRUE = MALE, FALSE = FEMALE
 
