@@ -49,6 +49,12 @@ public class Report {
 	@SerializedName("synop")
 	public String synopsis;
 	
+	@SerializedName("devlock")
+	public String dev_id_hash;
+	
+	@SerializedName("speclock")
+	public String spec_id_hash;
+	
 	public int age;
 	// TRUE = MALE, FALSE = FEMALE
 	

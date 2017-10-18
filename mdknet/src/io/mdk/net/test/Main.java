@@ -17,7 +17,7 @@ public class Main {
 	
 	static {
 		Log.DEBUG();
-		Logger.setPreffered(new NeoLog());
+		//Logger.setPreffered(new NeoLog());
 	}
 	
 	public static void main(String[] args) {
@@ -25,10 +25,10 @@ public class Main {
 		if(args.length >= 1){
 			if(args[0].equals("gui")){
 				//ServerConsoleUI.main(null);
+				ServerConsoleUI frame = new ServerConsoleUI();
+				frame.setVisible(true);
+				Log.Logger.setPreffered(new NeoLog());
 				String pin = JOptionPane.showInputDialog("Enter PIN");
-				ServerConsoleUI ui = new ServerConsoleUI();
-				ui.setVisible(true);
-				Logger.setPreffered(new NeoLog());
 				Server.protect(Integer.parseInt(pin));
 				Server server = new Server(6444, 60000);
 				server.start();

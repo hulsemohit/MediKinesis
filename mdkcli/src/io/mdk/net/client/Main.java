@@ -20,6 +20,10 @@ import io.mdk.net.utils.Report;
 public class Main {
 
 	public static void main(String[] args) {
+		test();
+	}
+	
+	public static void test(){
 		try {
 			Client client = new Client(InetAddress.getLocalHost().getHostName(), new Client.ExHandler() {
 				

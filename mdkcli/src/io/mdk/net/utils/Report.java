@@ -19,6 +19,12 @@ public class Report {
 	@SerializedName("synop")
 	public final String synopsis;
 	
+	@SerializedName("devlock")
+	public String dev_id_hash;
+	
+	@SerializedName("speclock")
+	public String spec_id_hash;
+	
 	/**
 	 * Gender indicating Flag
 	 */
@@ -60,6 +66,11 @@ public class Report {
 
 	public String[] getTruesymptoms() {
 		return truesymptoms;
+	}
+	
+	public void protect(String dev, String spec){
+		this.dev_id_hash = dev;
+		this.spec_id_hash = spec;
 	}
 	
 }
